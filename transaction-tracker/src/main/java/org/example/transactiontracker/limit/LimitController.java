@@ -1,6 +1,7 @@
 package org.example.transactiontracker.limit;
 
 import lombok.AllArgsConstructor;
+import org.example.transactiontracker.limit.dto.LimitRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,7 +19,7 @@ public class LimitController {
 
 
     @PostMapping
-    public ResponseEntity<?> createLimit(@RequestBody LimitDto limitDto){
+    public ResponseEntity<?> createLimit(@RequestBody LimitRequest limitDto){
 
         Limit limit = new Limit();
         limit.setLimitSum(BigDecimal.valueOf(limitDto.getLimitSum()));

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Service
 @AllArgsConstructor
@@ -45,7 +46,10 @@ public class TransactionService {
             transaction.setExceededLimit(limit);
         }
         transactionRepository.save(transaction);
+    }
 
+    public List<Transaction> getAllTransactionsWithLimitExceeded(Long accountId) {
+        return transactionRepository.findAllWithLimitExceeded(accountId);
     }
 
     private boolean isLimitExceeded(BigDecimal totalAmount, BigDecimal limitSum) {

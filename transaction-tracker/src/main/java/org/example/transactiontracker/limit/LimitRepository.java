@@ -12,9 +12,16 @@ import java.util.Optional;
 public interface LimitRepository extends JpaRepository<Limit, Long> {
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    @Query("SELECT l FROM Limit l WHERE l.expenseCategory = :expenseCategory AND l.accountId = :accountId ORDER BY l.limitDateTime DESC LIMIT 1")
-    Optional<Limit> findTopByExpenseCategoryAndAccountId(@Param("accountId") Long accountId, @Param("expenseCategory") String expenseCategory);
+    @Query("SELECT l FROM Limit l WHERE l.expenseCategory = :expenseCategory " +
+            "AND l.accountId = :accountId ORDER BY l.limitDateTime DESC LIMIT 1")
+    Optional<Limit> findTopByExpenseCategoryAndAccountId(@Param("accountId") Long accountId,
+                                                         @Param("expenseCategory") String expenseCategory);
 
     @Lock(LockModeType.PESSIMISTIC_WRITE)
-    Optional<Limit> findTopByAccountIdAndExpenseCategoryAndLimitDateTimeBeforeOrderByLimitDateTimeDesc(Long accountId, String expenseCategory, LocalDateTime now);
+    @Query("SELECT l FROM Limit l WHERE l.accountId = :accountId " +
+            "AND l.expenseCategory = :expenseCategory" +
+            " AND l.limitDateTime < :now ORDER BY l.limitDateTime DESC LIMIT 1")
+    Optional<Limit> findLatestLimitBeforeDate(@Param("accountId") Long accountId,
+                                              @Param("expenseCategory") String expenseCategory,
+                                              @Param("now") LocalDateTime now);
 }

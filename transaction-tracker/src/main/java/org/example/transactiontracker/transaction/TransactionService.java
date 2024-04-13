@@ -26,9 +26,9 @@ public class TransactionService {
     private final LimitService limitService;
 
 
-
-
     public void processTransaction(Transaction transaction) {
+        log.info("Processing transaction from account: {}", transaction.getAccountFromId());
+
         Limit limit = limitService.getOrCreateLimit(transaction.getAccountFromId(), transaction.getExpenseCategory());
 
         BigDecimal transactionUsdAmount = exchangeRateService.calculateTransactionUsdAmount(transaction, limit.getLimitCurrencyShortname());
@@ -39,12 +39,9 @@ public class TransactionService {
                 limit.getTotalAmountOfTransactions(),
                 limit.getLimitSum());
 
-        log.info("Limit exceeded: {}, Transaction amount {}", limitExceeded, transaction.getSum());
-
         transaction.setLimitExceeded(limitExceeded);
-        if (limitExceeded) {
-            transaction.setExceededLimit(limit);
-        }
+        transaction.setExceededLimit(limit);
+
         transactionRepository.save(transaction);
     }
 

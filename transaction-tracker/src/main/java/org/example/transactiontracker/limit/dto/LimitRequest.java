@@ -1,15 +1,13 @@
 package org.example.transactiontracker.limit.dto;
 
 import lombok.Data;
-import org.example.transactiontracker.limit.Limit;
 
-/**
- * DTO for {@link Limit}
- */
+import java.math.BigDecimal;
+
 @Data
 public class LimitRequest {
-    Double limitSum;
+    BigDecimal limitSum;
     String limitCurrencyShortname;
     String expenseCategory;
-    Long accountAccountId;
+    Long accountId;
 }

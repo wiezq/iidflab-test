@@ -32,12 +32,17 @@ public class LimitService {
     }
 
     public void saveLimit(Limit limit) {
+        // set current date time
         limit.setLimitDateTime(LocalDateTime.now());
         // find limit before date and get prev total amount
-        BigDecimal prevTotalAmount = limitRepository.findTopByAccountIdAndExpenseCategoryAndLimitDateTimeBeforeOrderByLimitDateTimeDesc(
-                limit.getAccountId(), limit.getExpenseCategory(), LocalDateTime.now())
-                .map(Limit::getTotalAmountOfTransactions)
-                .orElse(new BigDecimal(0));
+        BigDecimal prevTotalAmount =
+                limitRepository.findLatestLimitBeforeDate(
+                                limit.getAccountId(),
+                                limit.getExpenseCategory(),
+                                LocalDateTime.now())
+                        .map(Limit::getTotalAmountOfTransactions)
+                        .orElse(new BigDecimal(0));
+        // add prev total amount to current total amount
         limit.setTotalAmountOfTransactions(prevTotalAmount.add(limit.getTotalAmountOfTransactions()));
         limitRepository.save(limit);
     }

@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
  * DTO for {@link Transaction}
  */
 @Data
-public class TransactionResponse implements Serializable {
+public class TransactionResponse {
     Long id;
     Long accountFromId;
     Long accountToId;

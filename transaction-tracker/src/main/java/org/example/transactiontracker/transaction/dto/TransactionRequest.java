@@ -1,16 +1,15 @@
 package org.example.transactiontracker.transaction.dto;
 
-import lombok.Value;
+import lombok.Data;
 import org.example.transactiontracker.transaction.Transaction;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 
 /**
  * DTO for {@link Transaction}
  */
-@Value
-public class TransactionRequest implements Serializable {
+@Data
+public class TransactionRequest {
     Long accountFromAccountId;
     Long accountToAccountId;
     String currencyShortname;

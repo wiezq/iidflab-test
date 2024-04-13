@@ -2,59 +2,57 @@ package org.example.transactiontracker.transaction;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.example.transactiontracker.account.Account;
-import org.example.transactiontracker.account.AccountService;
 import org.example.transactiontracker.exchangerate.ExchangeRateService;
 import org.example.transactiontracker.limit.Limit;
 import org.example.transactiontracker.limit.LimitService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
 @Service
 @AllArgsConstructor
 @Slf4j
+@Transactional(isolation = Isolation.SERIALIZABLE)
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
 
     private final ExchangeRateService exchangeRateService;
 
-    private final AccountService accountService;
 
     private final LimitService limitService;
 
 
 
+
     public void processTransaction(Transaction transaction) {
-        Account accountFrom = accountService.getOrCreateAccount(transaction.getAccountFrom().getAccountId());
-        Account accountTo = accountService.getOrCreateAccount(transaction.getAccountTo().getAccountId());
-
-
-        Limit limit = limitService.getOrCreateLimit(accountFrom, transaction.getExpenseCategory());
+        Limit limit = limitService.getOrCreateLimit(transaction.getAccountFromId(), transaction.getExpenseCategory());
 
         BigDecimal transactionUsdAmount = exchangeRateService.calculateTransactionUsdAmount(transaction, limit.getLimitCurrencyShortname());
-        boolean limitExceeded = isLimitExceeded(accountFrom, transactionUsdAmount, limit.getLimitSum());
+
+        updateTransactionsTotalAmount(limit, transactionUsdAmount);
+
+        boolean limitExceeded = isLimitExceeded(
+                limit.getTotalAmountOfTransactions(),
+                limit.getLimitSum());
 
         log.info("Limit exceeded: {}, Transaction amount {}", limitExceeded, transaction.getSum());
 
-        transaction.setAccountFrom(accountFrom);
-        transaction.setAccountTo(accountTo);
         transaction.setLimitExceeded(limitExceeded);
         if (limitExceeded) {
             transaction.setExceededLimit(limit);
         }
         transactionRepository.save(transaction);
 
-        updateAccountTotalAmount(accountFrom, transaction.getSum());
     }
 
-    private boolean isLimitExceeded(Account account, BigDecimal transactionUsdAmount, BigDecimal limitSum) {
-        return account.getTotalAmount().add(transactionUsdAmount).compareTo(limitSum) > 0;
+    private boolean isLimitExceeded(BigDecimal totalAmount, BigDecimal limitSum) {
+        return totalAmount.compareTo(limitSum) > 0;
     }
 
-    private void updateAccountTotalAmount(Account account, BigDecimal amount) {
-        account.setTotalAmount(account.getTotalAmount().add(amount));
-        accountService.saveAccount(account);
+    private void updateTransactionsTotalAmount(Limit limit, BigDecimal transactionSum) {
+        limit.setTotalAmountOfTransactions(limit.getTotalAmountOfTransactions().add(transactionSum));
     }
 }

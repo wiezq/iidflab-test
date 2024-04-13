@@ -10,10 +10,13 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-    show-sql: true
+
   h2:
     console:
       enabled: true
       path: /h2-console
   liquibase:
     enabled: false
+logging:
+  level:
+    sql: debug

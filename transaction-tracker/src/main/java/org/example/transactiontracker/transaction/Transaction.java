@@ -1,6 +1,8 @@
 package org.example.transactiontracker.transaction;
 
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 import org.example.transactiontracker.account.Account;
 import org.example.transactiontracker.limit.Limit;
 
@@ -9,6 +11,8 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "transactions")
+@Getter
+@Setter
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

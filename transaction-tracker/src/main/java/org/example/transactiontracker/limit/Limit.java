@@ -3,6 +3,7 @@ package org.example.transactiontracker.limit;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.transactiontracker.account.Account;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -30,4 +31,7 @@ public class Limit {
 
     @Column(name = "expense_category", nullable = false)
     private String expenseCategory;
+
+    @ManyToOne
+    private Account account;
 }

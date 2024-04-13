@@ -13,8 +13,6 @@ import org.springframework.stereotype.Component;
 @AllArgsConstructor
 public class TransactionMapper {
 
-    private final LimitMapper limitMapper;
-
     public Transaction toEntity(TransactionRequest transactionRequest) {
         Transaction transaction = new Transaction();
         transaction.setAccountFromId(transactionRequest.getAccountFromAccountId());
@@ -37,7 +35,12 @@ public class TransactionMapper {
         response.setDateTime(transaction.getDateTime());
         response.setLimitExceeded(transaction.isLimitExceeded());
 
-        LimitResponse limitResponse = limitMapper.toResponse(transaction.getExceededLimit());
+
+        Limit exceededLimit = transaction.getExceededLimit();
+        LimitResponse limitResponse = new LimitResponse();
+        limitResponse.setLimitSum(exceededLimit.getLimitSum());
+        limitResponse.setCurrencyShortname(exceededLimit.getLimitCurrencyShortname());
+        limitResponse.setDateTime(exceededLimit.getLimitDateTime());
         response.setExceededLimit(limitResponse);
 
         return response;

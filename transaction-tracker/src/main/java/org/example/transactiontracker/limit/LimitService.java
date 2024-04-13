@@ -25,7 +25,7 @@ public class LimitService {
         limit.setLimitSum(new BigDecimal(1000));
         limit.setLimitDateTime(LocalDateTime.now());
         limit.setLimitCurrencyShortname("USD");
-        limit.setTotalAmountOfTransactions(new BigDecimal(0));
+        limit.setTotalAmountOfTransactions(BigDecimal.ZERO);
         limit.setExpenseCategory(expenseCategory);
         limit.setAccountId(account);
         return limitRepository.save(limit);

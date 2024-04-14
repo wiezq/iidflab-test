@@ -29,7 +29,7 @@ API_SYMBOLS: ${API_SYMBOLS}
 ```
 
 ## API
-Документация доступна по адресу http://localhost:8080/swagger-ui.html после запуска приложения.
+Документация доступна по адресу [http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui/index.html) после запуска приложения.
 
 # Endpoints
 POST /api/transaction/process

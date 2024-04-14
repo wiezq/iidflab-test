@@ -1,4 +1,13 @@
+exchange_api:
+  url: "https://api.twelvedata.com/eod"
+  key: ${API_KEY}
+  symbols: ${API_SYMBOLS}
+
 spring:
+  datasource:
+    url: ${DB_URL}
+    username: ${DB_USER}
+    password: ${DB_PASS}
   jpa:
     hibernate:
-      ddl-auto: none
+      ddl-auto: update

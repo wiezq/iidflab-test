@@ -1,11 +1,20 @@
 package org.example.transactiontracker.limit;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import org.example.transactiontracker.transaction.Transaction;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "limits")
@@ -16,11 +25,14 @@ public class Limit {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "limit_sum", nullable = false)
+    @Column(name = "account_id", nullable = false)
+    private Long accountId;
+
+    @Column(name = "limit_sum", nullable = false, precision = 10, scale = 2)
     private BigDecimal limitSum;
 
-    @Column(name = "transaction_sum", nullable = false)
-    private BigDecimal transactionSum;
+    @Column(name = "transaction_sum", nullable = false, precision = 10, scale = 2)
+    private BigDecimal totalAmountOfTransactions;
 
     @Column(name = "limit_datetime", nullable = false)
     private LocalDateTime limitDateTime;
@@ -30,4 +42,8 @@ public class Limit {
 
     @Column(name = "expense_category", nullable = false)
     private String expenseCategory;
+
+    @OneToMany(mappedBy = "exceededLimit")
+    List<Transaction> transactions = new ArrayList<>();
+
 }

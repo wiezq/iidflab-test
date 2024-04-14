@@ -20,16 +20,16 @@ public class DevExchangeRateProvider implements ExchangeRateProvider{
 
     @Override
     public void fetchExchangeRate() {
-        ExchangeRate exchangeRateRubUsd = new ExchangeRate();
-        exchangeRateRubUsd.setRate(new BigDecimal("0.011"));
-        exchangeRateRubUsd.setSymbol("RUB/USD");
-        exchangeRateRubUsd.setDateTime(LocalDateTime.now());
-        exchangeRateRepository.save(exchangeRateRubUsd);
+        saveExchangeRate(new BigDecimal("0.0110"), "RUB/USD");
 
-        ExchangeRate exchangeRateKztUsd = new ExchangeRate();
-        exchangeRateRubUsd.setRate(new BigDecimal("0.0022"));
-        exchangeRateRubUsd.setSymbol("KZT/USD");
-        exchangeRateRubUsd.setDateTime(LocalDateTime.now());
-        exchangeRateRepository.save(exchangeRateKztUsd);
+        saveExchangeRate(new BigDecimal("0.0022"), "KZT/USD");
+    }
+
+    public void saveExchangeRate(BigDecimal rate, String symbol) {
+        ExchangeRate exchangeRate = new ExchangeRate();
+        exchangeRate.setRate(rate);
+        exchangeRate.setSymbol(symbol);
+        exchangeRate.setDateTime(LocalDateTime.now());
+        exchangeRateRepository.save(exchangeRate);
     }
 }

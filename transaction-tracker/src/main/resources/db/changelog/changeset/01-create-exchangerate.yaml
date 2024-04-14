@@ -1,0 +1,30 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-exchange-rate-table
+      author: Ivan
+      changes:
+        - createTable:
+            tableName: exchange_rate
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: symbol
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: rate
+                  type: decimal(10,6)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: date_time
+                  type: timestamp
+                  constraints:
+                    nullable: false

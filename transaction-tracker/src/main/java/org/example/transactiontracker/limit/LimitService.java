@@ -41,9 +41,9 @@ public class LimitService {
                                 limit.getExpenseCategory(),
                                 LocalDateTime.now())
                         .map(Limit::getTotalAmountOfTransactions)
-                        .orElse(new BigDecimal(0));
+                        .orElse(BigDecimal.ZERO);
         // add prev total amount to current total amount
-        limit.setTotalAmountOfTransactions(prevTotalAmount.add(limit.getTotalAmountOfTransactions()));
+        limit.setTotalAmountOfTransactions(prevTotalAmount);
         limitRepository.save(limit);
     }
 }

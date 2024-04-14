@@ -75,7 +75,7 @@ public class LimitServiceUnitTest {
         Limit limit = new Limit();
         limit.setAccountId(1L);
         limit.setExpenseCategory("service");
-        limit.setTotalAmountOfTransactions(new BigDecimal(100));
+        limit.setTotalAmountOfTransactions(BigDecimal.ZERO);
         when(limitRepository.findLatestLimitBeforeDate(anyLong(), anyString(), any(LocalDateTime.class))).thenReturn(Optional.empty());
         when(limitRepository.save(any(Limit.class))).thenReturn(limit);
 
@@ -84,7 +84,7 @@ public class LimitServiceUnitTest {
 
         // Then
         verify(limitRepository, times(1)).save(limit);
-        assertEquals(new BigDecimal(100), limit.getTotalAmountOfTransactions());
+        assertEquals(BigDecimal.ZERO, limit.getTotalAmountOfTransactions());
     }
 
     @Test
@@ -93,7 +93,7 @@ public class LimitServiceUnitTest {
         Limit limit = new Limit();
         limit.setAccountId(1L);
         limit.setExpenseCategory("service");
-        limit.setTotalAmountOfTransactions(new BigDecimal(100));
+        limit.setTotalAmountOfTransactions(BigDecimal.ZERO);
 
         Limit previousLimit = new Limit();
         previousLimit.setTotalAmountOfTransactions(new BigDecimal(200));
@@ -106,7 +106,7 @@ public class LimitServiceUnitTest {
 
         // Then
         verify(limitRepository, times(1)).save(limit);
-        assertEquals(new BigDecimal(300), limit.getTotalAmountOfTransactions());
+        assertEquals(new BigDecimal(200), limit.getTotalAmountOfTransactions());
     }
 
 }

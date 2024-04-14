@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/changeset/01-create-exchangerate.yaml
+  - include:
+      file: db/changelog/changeset/02-create-limit.yaml
+  - include:
+      file: db/changelog/changeset/03-create-transaction.yaml

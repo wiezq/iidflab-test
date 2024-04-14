@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -40,6 +41,7 @@ public class TransactionService {
 
         transaction.setLimitExceeded(limitExceeded);
         transaction.setExceededLimit(limit);
+        transaction.setDateTime(LocalDateTime.now());
 
         transactionRepository.save(transaction);
         log.info("Transaction processed: {}", transaction);

@@ -16,9 +16,11 @@ public class ExchangeRate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "symbol", nullable = false)
     private String symbol;
     // set the precision and scale for the rate column
-    @Column(precision = 10, scale = 6)
+    @Column(name = "rate", precision = 10, scale = 6, nullable = false)
     private BigDecimal rate;
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 }

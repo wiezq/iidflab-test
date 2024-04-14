@@ -1,0 +1,45 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-limit-table
+      author: Ivan
+      changes:
+        - createTable:
+            tableName: limits
+            columns:
+              - column:
+                  name: id
+                  type: bigint
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+                    nullable: false
+              - column:
+                  name: account_id
+                  type: bigint
+                  constraints:
+                    nullable: false
+              - column:
+                  name: limit_sum
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: transaction_sum
+                  type: decimal(10,2)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: limit_datetime
+                  type: timestamp
+                  constraints:
+                    nullable: false
+              - column:
+                  name: limit_currency_shortname
+                  type: varchar(255)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: expense_category
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

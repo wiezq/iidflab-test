@@ -28,10 +28,10 @@ public class Limit {
     @Column(name = "account_id", nullable = false)
     private Long accountId;
 
-    @Column(name = "limit_sum", nullable = false)
+    @Column(name = "limit_sum", nullable = false, precision = 10, scale = 2)
     private BigDecimal limitSum;
 
-    @Column(name = "transaction_sum", nullable = false)
+    @Column(name = "transaction_sum", nullable = false, precision = 10, scale = 2)
     private BigDecimal totalAmountOfTransactions;
 
     @Column(name = "limit_datetime", nullable = false)

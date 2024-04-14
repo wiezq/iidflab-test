@@ -4,7 +4,6 @@ import lombok.Data;
 import org.example.transactiontracker.limit.dto.LimitResponse;
 import org.example.transactiontracker.transaction.Transaction;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 

@@ -3,7 +3,6 @@ package org.example.transactiontracker.transaction.utils;
 import lombok.AllArgsConstructor;
 import org.example.transactiontracker.limit.Limit;
 import org.example.transactiontracker.limit.dto.LimitResponse;
-import org.example.transactiontracker.limit.utils.LimitMapper;
 import org.example.transactiontracker.transaction.Transaction;
 import org.example.transactiontracker.transaction.dto.TransactionRequest;
 import org.example.transactiontracker.transaction.dto.TransactionResponse;

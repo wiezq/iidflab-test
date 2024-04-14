@@ -15,7 +15,6 @@ import java.util.List;
 @Service
 @AllArgsConstructor
 @Slf4j
-@Transactional(isolation = Isolation.SERIALIZABLE)
 public class TransactionService {
 
     private final TransactionRepository transactionRepository;
@@ -25,7 +24,7 @@ public class TransactionService {
 
     private final LimitService limitService;
 
-
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void processTransaction(Transaction transaction) {
         log.info("Processing transaction from account: {}", transaction.getAccountFromId());
 
@@ -43,6 +42,7 @@ public class TransactionService {
         transaction.setExceededLimit(limit);
 
         transactionRepository.save(transaction);
+        log.info("Transaction processed: {}", transaction);
     }
 
     public List<Transaction> getAllTransactionsWithLimitExceeded(Long accountId) {

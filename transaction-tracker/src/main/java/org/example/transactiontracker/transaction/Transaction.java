@@ -26,7 +26,7 @@ public class Transaction {
     @Column(name = "currency_shortname", nullable = false)
     private String currencyShortname;
 
-    @Column(name = "sum", nullable = false)
+    @Column(name = "sum", nullable = false, precision = 10, scale = 2)
     private BigDecimal sum;
 
     @Column(name = "expense_category", nullable = false)
